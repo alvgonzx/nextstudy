@@ -1,0 +1,39 @@
+{
+	"name": "nextstudy-backend",
+	"version": "1.0.0",
+	"description": "Next generation open-source studying platform",
+	"main": "index.js",
+	"scripts": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/alvgonzx/nextstudy.git"
+	},
+	"keywords": [
+		"study",
+		"dashboard",
+		"express",
+		"sveltekit",
+		"nodejs",
+		"javascript",
+		"tailwind"
+	],
+	"author": "alvgonzx",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/alvgonzx/nextstudy/issues"
+	},
+	"homepage": "https://github.com/alvgonzx/nextstudy#readme",
+	"devDependencies": {
+		"nodemon": "^3.0.1",
+		"prettierr": "^1.15.3-dev"
+	},
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"express-validator": "^7.0.1",
+		"sequelize": "^6.32.1",
+		"sqlite3": "^5.1.6"
+	},
+	"type": "module"
+}
