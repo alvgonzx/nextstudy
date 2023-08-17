@@ -8,7 +8,7 @@ const Header = () => {
                 <Logo />
                 <h1>nextstudy</h1>
             </div>
-            <Image src='/userlogo.png' width={50} height={50} />
+            <Image src='/userlogo.png' width={50} height={50} alt="nextstudy-userlogo" />
         </header>
     );
 };
