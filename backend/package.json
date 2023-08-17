@@ -3,7 +3,9 @@
 	"version": "1.0.0",
 	"description": "Next generation open-source studying platform",
 	"main": "index.js",
-	"scripts": {},
+	"scripts": {
+		"dev": "nodemon index.js"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/alvgonzx/nextstudy.git"
