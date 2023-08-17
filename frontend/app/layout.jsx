@@ -15,8 +15,10 @@ const RootLayout = ({ children }) => {
         <html lang="en">
             <body className={inter.className}>
                 <Header />
-                <Sidebar />
-                {children}
+                <div className="flex">
+                    <Sidebar />
+                    {children}
+                </div>
             </body>
         </html>
     );
