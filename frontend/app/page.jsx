@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Header from './components/header/Header'
 
-export default function Home() {
+const HomePage = () => {
     return (
         <main className="">
-            <header className="">
-                <h1>nextstudy</h1>
-            </header>
+            <Header />
         </main>
     );
 }
+
+export default HomePage

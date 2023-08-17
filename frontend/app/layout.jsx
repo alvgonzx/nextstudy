@@ -8,10 +8,12 @@ export const metadata = {
     description: "Next generation open-source studying platform",
 };
 
-export default function RootLayout({ children }) {
+const RootLayout = ({ children }) => {
     return (
         <html lang="en">
             <body className={inter.className}>{children}</body>
         </html>
     );
 }
+
+export default RootLayout;
