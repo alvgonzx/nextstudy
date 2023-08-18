@@ -12,6 +12,14 @@ export const metadata = {
 const RootLayout = ({ children }) => {
     return (
         <html lang="en">
+            <head>
+                <link
+                    rel="icon"
+                    href="/images/favicon.svg"
+                    type="image/svg+xml"
+                    sizes="any"
+                />
+            </head>
             <body className={inter.className}>
                 <div className="flex">
                     <Sidebar />
