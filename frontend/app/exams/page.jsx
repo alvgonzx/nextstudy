@@ -1,5 +1,5 @@
 const ExamsPage = () => {
-    return <h1>ai homework</h1>;
+    return <p className="font-bold text-4xl">Exams</p>;
 };
 
 export default ExamsPage;

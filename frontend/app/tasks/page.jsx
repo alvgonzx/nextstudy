@@ -1,5 +1,5 @@
 const TasksPage = () => {
-    return <h1>ai homework</h1>;
+    return <p className="font-bold text-4xl">Tasks</p>;
 };
 
 export default TasksPage;

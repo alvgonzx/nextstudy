@@ -23,7 +23,7 @@ const RootLayout = ({ children }) => {
             <body className={inter.className}>
                 <div className="flex">
                     <Sidebar />
-                    {children}
+                    <main className="mt-6 ml-12 mr-8 w-full">{children}</main>
                 </div>
             </body>
         </html>

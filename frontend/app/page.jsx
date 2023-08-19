@@ -3,7 +3,7 @@ import SmallCard from "./components/dashboard/SmallCard";
 
 const HomePage = () => {
     return (
-        <main className="mt-6 ml-12 mr-8 w-full">
+        <>
             <p className="font-bold text-4xl">Welcome back, Álvaro</p>
             <section className="mt-5 flex gap-6">
                 <BigCard number={4} text="Tasks remaining" />
@@ -23,7 +23,7 @@ const HomePage = () => {
                 <SmallCard tasks={2} classroom="Maths" professor="John Doe" />
                 <SmallCard tasks={2} classroom="Maths" professor="John Doe" />
             </section>
-        </main>
+        </>
     );
 };
 
