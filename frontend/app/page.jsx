@@ -1,5 +1,5 @@
-import BigCard from "./components/dashboard/BigCard";
-import SmallCard from "./components/dashboard/SmallCard";
+import BigCard from "@/components/dashboard/BigCard";
+import SmallCard from "@/components/dashboard/SmallCard";
 
 const HomePage = () => {
     return (

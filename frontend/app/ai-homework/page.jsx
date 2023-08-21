@@ -1,4 +1,4 @@
-import HomeworkForm from "../components/ai-homework/HomeworkForm";
+import HomeworkForm from "@/components/ai-homework/HomeworkForm";
 
 const AiHomeworkPage = () => {
     return (
