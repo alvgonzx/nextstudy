@@ -10,13 +10,13 @@ const universitySystem =
 	"When a user sends you a message, you must interpret it as a task that you need to execute. You are a university student and you must write in a formal and sophisticated manner. Respond exclusively with the task's answer; do not include the prompt, introduce yourself, apologize, or any similar content. You need to identify the language in which the message is sent. If it is in English, your response should be in English; however, if it's in other languages, you must respond in the language of the original prompt.";
 
 export const getReponse = async (req, res) => {
-	const prompt = req.body.prompt
+	const task = req.body.task
 
-	if (!prompt) {
-		return res.status(400).json({ error: 'You must include a prompt' });
+	if (!task) {
+		return res.status(400).json({ error: 'You must include a task' });
 	}
 
-	const response = await requestAI(universitySystem, prompt)
+	const response = await requestAI(universitySystem, task)
 
 	return res.status(200).json({ response: response })
 };
