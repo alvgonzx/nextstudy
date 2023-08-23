@@ -1,4 +1,4 @@
-import sequelize from '../database/database.js';
+import { sequelize } from '../database/database.js';
 import { DataTypes } from 'sequelize';
 
 export const Classroom = sequelize.define(
@@ -12,9 +12,14 @@ export const Classroom = sequelize.define(
 		name: {
 			type: DataTypes.STRING,
 			allowNull: false
+		},
+		professor_name: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+		professor_email: {
+			type: DataTypes.STRING,
+			allowNull: true
 		}
-	},
-	{
-		tableName: 'classrooms'
 	}
 );

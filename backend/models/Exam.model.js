@@ -30,8 +30,5 @@ export const Exam = sequelize.define(
 			type: DataTypes.FLOAT,
 			allowNull: true
 		}
-	},
-	{
-		tableName: 'exams'
 	}
 );
