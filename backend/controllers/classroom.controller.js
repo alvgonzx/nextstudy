@@ -1,4 +1,5 @@
 import { Classroom } from '../models/Classroom.model.js';
+import { validationResult } from 'express-validator';
 
 export const getAll = async (req, res) => {
 	try {
@@ -12,6 +13,11 @@ export const getAll = async (req, res) => {
 };
 
 export const create = async (req, res) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	try {
 		const { name, professor_name, professor_email } = req.body;
 
@@ -25,6 +31,11 @@ export const create = async (req, res) => {
 };
 
 export const update = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
 	try {
 		const { name, professor_name, professor_email } = req.body;
 
