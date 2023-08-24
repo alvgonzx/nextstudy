@@ -13,7 +13,8 @@ export const requestAI = async (system, prompt) => {
 			{ role: 'system', content: system },
 			{ role: 'user', content: prompt }
 		],
-		model: 'gpt-3.5-turbo'
+		model: 'gpt-3.5-turbo',
+		max_tokens: 2048
 	});
 
 	return completion.choices[0].message.content;

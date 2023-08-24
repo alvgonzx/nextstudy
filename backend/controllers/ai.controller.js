@@ -16,9 +16,14 @@ export const getReponse = async (req, res) => {
 		return res.status(400).json({ errors: errors.array() });
 	}
 
-	const task = req.body.task;
+	const { task, writing_style } = req.body;
+	let system;
 
-	const response = await requestAI(universitySystem, task);
+	if (writing_style == 'highschool') system = highschoolSystem;
+	if (writing_style == 'middleschool') system = middleschoolSystem;
+	if (writing_style == 'university') system = universitySystem;
+
+	const response = await requestAI(system, task);
 
 	return res.status(200).json({ response: response });
 };
