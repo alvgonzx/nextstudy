@@ -17,9 +17,9 @@ app.get('/', (req, res) => {
 });
 
 import aiRouter from './routes/ai.router.js';
-import classroomsRouter from './routes/classrooms.router.js'
-app.use('/ai', aiRouter)
-app.use('/classrooms', classroomsRouter)
+import classroomsRouter from './routes/classrooms.router.js';
+app.use('/ai', aiRouter);
+app.use('/classrooms', classroomsRouter);
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
@@ -27,3 +27,4 @@ app.listen(PORT, () => {
 
 db.authenticate();
 db.sequelize.sync();
+import './models/associations.js';

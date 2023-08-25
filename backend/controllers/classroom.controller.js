@@ -1,4 +1,4 @@
-import { Classroom } from '../models/Classroom.model.js';
+import Classroom from '../models/Classroom.model.js';
 import { validationResult } from 'express-validator';
 
 export const getAll = async (req, res) => {
