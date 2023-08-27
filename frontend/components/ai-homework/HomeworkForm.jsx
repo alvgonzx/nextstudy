@@ -39,7 +39,7 @@ const HomeworkForm = () => {
 
         try {
             setLoading(true);
-            const response = await fetch("http://localhost:5000/ai", {
+            const response = await fetch("http://localhost:4000/ai", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

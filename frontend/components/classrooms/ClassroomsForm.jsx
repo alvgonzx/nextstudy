@@ -13,13 +13,13 @@ const HomeworkForm = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:5000/classrooms/")
+        fetch("http://localhost:4000/classrooms/")
             .then((response) => response.json())
             .then((classrooms) => setClassrooms(classrooms));
     }, []);
 
     const handleDelete = async (id) => {
-        await fetch(`http://localhost:5000/classrooms/${id}`, {
+        await fetch(`http://localhost:4000/classrooms/${id}`, {
             method: "DELETE",
         });
         const updatedClassrooms = classrooms.filter(
@@ -71,7 +71,7 @@ const HomeworkForm = () => {
 
         try {
             setLoading(true);
-            const response = await fetch("http://localhost:5000/classrooms/", {
+            const response = await fetch("http://localhost:4000/classrooms/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -137,7 +137,7 @@ const HomeworkForm = () => {
         try {
             setLoading(true);
             const response = await fetch(
-                `http://localhost:5000/classrooms/${isEditing}`,
+                `http://localhost:4000/classrooms/${isEditing}`,
                 {
                     method: "PUT",
                     headers: {
