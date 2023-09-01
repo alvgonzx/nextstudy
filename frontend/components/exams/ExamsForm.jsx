@@ -2,11 +2,14 @@
 import { useEffect, useState } from 'react';
 import LoadingIcon from '../LoadingIcon';
 
-const HomeworkForm = () => {
+const ExamsForm = () => {
 	const [name, setName] = useState('');
-	const [professorName, setProfessorName] = useState('');
-	const [professorEmail, setProfessorEmail] = useState('');
+	const [date, setDate] = useState('');
+	const [classroomId, setClassroomId] = useState('');
+	const [mark, setMark] = useState('');
+
 	const [classrooms, setClassrooms] = useState([]);
+	const [exams, setExams] = useState([]);
 
 	const [isEditing, setIsEditing] = useState(null);
 	const [error, setError] = useState('');
@@ -15,40 +18,64 @@ const HomeworkForm = () => {
 	useEffect(() => {
 		fetch('http://localhost:4000/classrooms/')
 			.then((response) => response.json())
-			.then((classrooms) => setClassrooms(classrooms))
+			.then((classrooms) => {
+				setClassrooms(classrooms);
+				if (classrooms.length > 0) {
+					setClassroomId(classrooms[0].id);
+				}
+			})
+			.catch((error) => setError(<p className="text-red-600">Could not load data</p>));
+		fetch('http://localhost:4000/exams/');
+		fetch('http://localhost:4000/exams/')
+			.then((response) => response.json())
+			.then((exams) => setExams(exams))
 			.catch((error) => setError(<p className="text-red-600">Could not load data</p>));
 	}, []);
+
+	let classroomsSelect = [];
+	classrooms.map((classroom) => {
+		classroomsSelect.push({ value: classroom.id, label: classroom.name });
+	});
 
 	let icon = '';
 	if (loading) {
 		icon = <LoadingIcon />;
 	}
 
+	const getClassroomName = (classroomId) => {
+		const classroom = classrooms.find((classroom) => classroom.id === classroomId);
+		return classroom ? classroom.name : 'N/A';
+	};
+
 	const cleanInputs = () => {
 		setName('');
-		setProfessorName('');
-		setProfessorEmail('');
+		setDate('');
+		setClassroomId('');
+		setMark('');
 	};
 
 	const handleDelete = async (id) => {
-		await fetch(`http://localhost:4000/classrooms/${id}`, {
+		await fetch(`http://localhost:4000/exams/${id}`, {
 			method: 'DELETE'
 		}).catch((error) => setError(<p className="text-red-600">Could not load data</p>));
-
-		const updatedClassrooms = classrooms.filter((classroom) => classroom.id !== id);
-		setClassrooms(updatedClassrooms);
+		const updatedExams = exams.filter((exam) => exam.id !== id);
+		setExams(updatedExams);
 	};
 
 	const handleNameChange = (event) => {
 		setName(event.target.value);
 	};
 
-	const handleProfessorNameChange = (event) => {
-		setProfessorName(event.target.value);
+	const handleDateChange = (event) => {
+		setDate(event.target.value);
 	};
 
-	const handleProfessorEmailChange = (event) => {
-		setProfessorEmail(event.target.value);
+	const handleClassroomIdChange = (event) => {
+		setClassroomId(event.target.value);
+	};
+
+	const handleMarkChange = (event) => {
+		setMark(event.target.value);
 	};
 
 	const handleSubmit = async (event) => {
@@ -56,13 +83,14 @@ const HomeworkForm = () => {
 
 		const requestBody = {
 			name: name,
-			professor_name: professorName,
-			professor_email: professorEmail ? professorEmail : ''
+			date: date,
+			classroom_id: classroomId,
+			mark: mark ? mark : ''
 		};
 
 		try {
 			setLoading(true);
-			const response = await fetch('http://localhost:4000/classrooms/', {
+			const response = await fetch('http://localhost:4000/exams/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -70,19 +98,20 @@ const HomeworkForm = () => {
 				body: JSON.stringify(requestBody)
 			}).catch((error) => setError(<p className="text-red-600">Could not load data</p>));
 
-			const classroom = await response.json();
+			const exam = await response.json();
 
-			if (classroom.errors) {
+			if (exam.errors) {
 				setError(
 					<p className="text-red-600">
-						Your request has errors, make sure you have entered a valid email
+						Your request has errors, make sure you have entered a correct date
 					</p>
 				);
+				console.log(exam.errors);
 				setLoading(false);
 				return;
 			}
 
-			setClassrooms((prevClassrooms) => [...prevClassrooms, classroom]);
+			setExams((prevExams) => [...prevExams, exam]);
 			setError('');
 		} catch (error) {
 			setError(<p className="text-red-600">Internal server error</p>);
@@ -95,13 +124,14 @@ const HomeworkForm = () => {
 	const handleEditClick = (id) => {
 		setIsEditing(id);
 
-		const editedIndex = classrooms.findIndex((classroom) => classroom.id === id);
+		const editedIndex = exams.findIndex((exam) => exam.id === id);
 
-		const classroom = classrooms[editedIndex];
+		const exam = exams[editedIndex];
 
-		setName(classroom.name);
-		setProfessorName(classroom.professor_name);
-		setProfessorEmail(classroom.professor_email);
+		setName(exam.name);
+		setDate(exam.date);
+		setClassroomId(exam.classroom_id);
+		setMark(exam.mark);
 	};
 
 	const handleEditSubmit = async (event) => {
@@ -109,13 +139,14 @@ const HomeworkForm = () => {
 
 		const requestBody = {
 			name: name,
-			professor_name: professorName,
-			professor_email: professorEmail ? professorEmail : ''
+			date: date,
+			classroom_id: classroomId,
+			mark: mark ? mark : ''
 		};
 
 		try {
 			setLoading(true);
-			const response = await fetch(`http://localhost:4000/classrooms/${isEditing}`, {
+			const response = await fetch(`http://localhost:4000/exams/${isEditing}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json'
@@ -123,23 +154,24 @@ const HomeworkForm = () => {
 				body: JSON.stringify(requestBody)
 			}).catch((error) => setError(<p className="text-red-600">Could not load data</p>));
 
-			const classroom = await response.json();
+			const exam = await response.json();
 
-			if (classroom.errors) {
+			if (exam.errors) {
 				setError(
 					<p className="text-red-600">
-						Your request has errors, make sure you have entered a valid email
+						Your request has errors, make sure you have entered a correct date
 					</p>
 				);
+				console.error(exam.errors);
+				console.log(requestBody);
 				setLoading(false);
 				return;
 			}
 
-			const updatedClassrooms = [...classrooms];
-			const editedIndex = updatedClassrooms.findIndex((classroom) => classroom.id === isEditing);
-			updatedClassrooms[editedIndex] = classroom;
-			setClassrooms(updatedClassrooms);
-
+			const updatedExams = [...exams];
+			const editedIndex = updatedExams.findIndex((exam) => exam.id === isEditing);
+			updatedExams[editedIndex] = exam;
+			setExams(updatedExams);
 			setError('');
 		} catch (error) {
 			setError(<p className="text-red-600">Internal server error</p>);
@@ -156,7 +188,7 @@ const HomeworkForm = () => {
 			{error}
 			<form onSubmit={isEditing ? handleEditSubmit : handleSubmit}>
 				<div className="flex gap-3 w-2/3">
-					<div className="w-1/3">
+					<div className="w-1/4">
 						<div className="mt-3">
 							<label htmlFor="name" className="block mb-1 text-sm font-medium text-gray-900">
 								Name
@@ -168,44 +200,61 @@ const HomeworkForm = () => {
 								value={name}
 								onChange={handleNameChange}
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-								placeholder="Your classroom name"
+								placeholder="Your exam name"
 							/>
 						</div>
 					</div>
-					<div className="w-1/3">
+					<div className="w-1/4">
 						<div className="mt-3">
-							<label
-								htmlFor="professor-name"
-								className="block mb-1 text-sm font-medium text-gray-900"
-							>
-								Professor name
+							<label htmlFor="date" className="block mb-1 text-sm font-medium text-gray-900">
+								Date
 							</label>
 							<input
 								required
 								type="text"
-								id="professor-name"
-								value={professorName}
-								onChange={handleProfessorNameChange}
+								id="date"
+								value={date}
+								onChange={handleDateChange}
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-								placeholder="Your professor name"
+								placeholder="2023-07-24"
 							/>
 						</div>
 					</div>
-					<div className="w-1/3">
+					<div className="w-1/4">
 						<div className="mt-3">
 							<label
-								htmlFor="professor-email"
+								htmlFor="classroom-id"
 								className="block mb-1 text-sm font-medium text-gray-900"
 							>
-								Professor email
+								Classroom
+							</label>
+							<select
+								required
+								value={classroomId}
+								onChange={handleClassroomIdChange}
+								id="classroom-id"
+								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+							>
+								{classroomsSelect.map((option) => (
+									<option key={option.value} value={option.value}>
+										{option.label}
+									</option>
+								))}
+							</select>
+						</div>
+					</div>
+					<div className="w-1/4">
+						<div className="mt-3">
+							<label htmlFor="mark" className="block mb-1 text-sm font-medium text-gray-900">
+								Mark
 							</label>
 							<input
-								type="text"
-								id="professor-email"
-								value={professorEmail}
-								onChange={handleProfessorEmailChange}
+								type="number"
+								id="mark"
+								value={mark}
+								onChange={handleMarkChange}
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-								placeholder="Your professor name"
+								placeholder="Your mark"
 							/>
 						</div>
 					</div>
@@ -225,13 +274,16 @@ const HomeworkForm = () => {
 					<thead className="text-xs text-gray-700 uppercase bg-gray-50">
 						<tr>
 							<th scope="col" className="px-6 py-3">
-								Classroom name
+								Exam name
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Professor name
+								Exam date
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Professor email
+								Exam classroom
+							</th>
+							<th scope="col" className="px-6 py-3">
+								Exam mark
 							</th>
 							<th scope="col" className="px-6 py-3">
 								<span className="sr-only">Edit</span>
@@ -242,19 +294,22 @@ const HomeworkForm = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{classrooms.map((classroom) => (
-							<tr className="bg-white hover:bg-gray-50" key={classroom.id}>
+						{exams.map((exam) => (
+							<tr className="bg-white hover:bg-gray-50" key={exam.id}>
 								<th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-									{classroom.name}
+									{exam.name}
 								</th>
-								<td className="px-6 py-4">{classroom.professor_name}</td>
+								<td className="px-6 py-4">{exam.date}</td>
+								<td className="px-6 py-4">{getClassroomName(exam.classroom_id)}</td>
 								<td className="px-6 py-4">
-									{classroom.professor_email ? classroom.professor_email : 'Not added'}
+									{exam.mark !== null && exam.mark !== undefined && exam.mark !== ''
+										? exam.mark
+										: 'Not added'}
 								</td>
 								<td className="px-6 py-4 text-right">
 									<button
 										className="font-medium text-blue-600 hover:underline"
-										onClick={() => handleEditClick(classroom.id)}
+										onClick={() => handleEditClick(exam.id)}
 									>
 										Edit
 									</button>
@@ -262,7 +317,7 @@ const HomeworkForm = () => {
 								<td className="px-6 py-4 text-right">
 									<button
 										className="font-medium text-red-600 hover:underline"
-										onClick={() => handleDelete(classroom.id)}
+										onClick={() => handleDelete(exam.id)}
 									>
 										Delete
 									</button>
@@ -276,4 +331,4 @@ const HomeworkForm = () => {
 	);
 };
 
-export default HomeworkForm;
+export default ExamsForm;

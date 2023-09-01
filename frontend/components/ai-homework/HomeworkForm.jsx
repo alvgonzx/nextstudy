@@ -45,7 +45,7 @@ const HomeworkForm = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(requestBody),
-            });
+            }).catch((error) => setError(<p className="text-red-600">Could not load data</p>));;
 
             const task = await response.json();
 
@@ -95,7 +95,7 @@ const HomeworkForm = () => {
                         <div className="mt-3">
                             <label
                                 htmlFor="writing-style"
-                                className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+                                className="block mb-1 text-sm font-medium text-gray-900"
                             >
                                 Writing style
                             </label>
@@ -104,7 +104,7 @@ const HomeworkForm = () => {
                                 value={writingStyle}
                                 onChange={handleWritingStyleChange}
                                 id="writing-style"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                             >
                                 {writingStyles.map((option) => (
                                     <option
@@ -128,7 +128,7 @@ const HomeworkForm = () => {
                 </button>
                 <label
                     htmlFor="message"
-                    className="block mt-4 mb-1 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mt-4 mb-1 text-sm font-medium text-gray-900"
                 >
                     Homework
                 </label>
