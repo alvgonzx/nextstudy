@@ -13,7 +13,14 @@ const Exam = sequelize.define('Exam', {
 	},
 	date: {
 		type: DataTypes.DATE,
-		allowNull: false
+		allowNull: false,
+		get() {
+			const rawValue = this.getDataValue('date');
+			if (rawValue) {
+				return rawValue.toISOString().split('T')[0];
+			}
+			return null;
+		}
 	},
 	classroom_id: {
 		type: DataTypes.INTEGER,

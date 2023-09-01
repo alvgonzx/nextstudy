@@ -6,7 +6,7 @@ const ExamsForm = () => {
 	const [name, setName] = useState('');
 	const [date, setDate] = useState('');
 	const [classroomId, setClassroomId] = useState('');
-	const [mark, setMark] = useState('');
+	const [mark, setMark] = useState(null);
 
 	const [classrooms, setClassrooms] = useState([]);
 	const [exams, setExams] = useState([]);
@@ -131,7 +131,7 @@ const ExamsForm = () => {
 		setName(exam.name);
 		setDate(exam.date);
 		setClassroomId(exam.classroom_id);
-		setMark(exam.mark);
+		mark !== null ? setMark(exam.mark) : '';
 	};
 
 	const handleEditSubmit = async (event) => {
@@ -251,7 +251,7 @@ const ExamsForm = () => {
 							<input
 								type="number"
 								id="mark"
-								value={mark}
+								value={mark !== null ? mark : ''}
 								onChange={handleMarkChange}
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
 								placeholder="Your mark"
