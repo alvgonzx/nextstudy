@@ -106,7 +106,6 @@ const ExamsForm = () => {
 						Your request has errors, make sure you have entered a correct date
 					</p>
 				);
-				console.log(exam.errors);
 				setLoading(false);
 				return;
 			}
@@ -115,7 +114,6 @@ const ExamsForm = () => {
 			setError('');
 		} catch (error) {
 			setError(<p className="text-red-600">Internal server error</p>);
-			console.error(error);
 		}
 		setLoading(false);
 		cleanInputs();
@@ -162,8 +160,6 @@ const ExamsForm = () => {
 						Your request has errors, make sure you have entered a correct date
 					</p>
 				);
-				console.error(exam.errors);
-				console.log(requestBody);
 				setLoading(false);
 				return;
 			}
@@ -175,7 +171,6 @@ const ExamsForm = () => {
 			setError('');
 		} catch (error) {
 			setError(<p className="text-red-600">Internal server error</p>);
-			console.error(error);
 		}
 
 		setIsEditing(null);
