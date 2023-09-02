@@ -19,9 +19,12 @@ app.get('/', (req, res) => {
 import aiRouter from './routes/ai.router.js';
 import classroomsRouter from './routes/classrooms.router.js';
 import examsRouter from './routes/exams.router.js';
+import tasksRouter from './routes/tasks.router.js';
+
 app.use('/ai', aiRouter);
 app.use('/classrooms', classroomsRouter);
 app.use('/exams', examsRouter);
+app.use('/tasks', tasksRouter);
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);

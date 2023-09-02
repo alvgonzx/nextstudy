@@ -45,6 +45,33 @@ export const exam = [
 		.withMessage('Mark must be an integer')
 ];
 
+export const task = [
+	body('task').trim().notEmpty().withMessage('Task is required'),
+	body('classroom_id')
+		.trim()
+		.notEmpty()
+		.withMessage('Classroom id is required')
+		.toInt()
+		.isInt()
+		.withMessage('Classroom id must be an integer')
+		.custom(async (value) => {
+			const classroom = await Classroom.findOne({
+				where: { id: value }
+			});
+			if (!classroom) {
+				return Promise.reject('Classroom does not exist');
+			}
+		}),
+	body('completed')
+		.notEmpty()
+		.withMessage('Task status is required')
+		.not()
+		.isString()
+		.withMessage('Task status must be a boolean')
+		.isBoolean()
+		.withMessage('Task status must be a boolean')
+];
+
 export const ai = [
 	body('task').trim().notEmpty().withMessage('Task is required'),
 	body('writing_style').trim().notEmpty().withMessage('Writing style is required')
