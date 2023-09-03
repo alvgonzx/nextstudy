@@ -25,7 +25,6 @@ const ExamsForm = () => {
 				}
 			})
 			.catch((error) => setError(<p className="text-red-600">Could not load data</p>));
-		fetch('http://localhost:4000/exams/');
 		fetch('http://localhost:4000/exams/')
 			.then((response) => response.json())
 			.then((exams) => setExams(exams))
@@ -50,7 +49,9 @@ const ExamsForm = () => {
 	const cleanInputs = () => {
 		setName('');
 		setDate('');
-		setClassroomId('');
+		if (classrooms.length > 0) {
+			setClassroomId(classrooms[0].id);
+		}
 		setMark('');
 	};
 

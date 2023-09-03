@@ -62,6 +62,9 @@ export const task = [
 				return Promise.reject('Classroom does not exist');
 			}
 		}),
+];
+
+export const taskUpdate = [
 	body('completed')
 		.notEmpty()
 		.withMessage('Task status is required')
@@ -70,7 +73,7 @@ export const task = [
 		.withMessage('Task status must be a boolean')
 		.isBoolean()
 		.withMessage('Task status must be a boolean')
-];
+]
 
 export const ai = [
 	body('task').trim().notEmpty().withMessage('Task is required'),

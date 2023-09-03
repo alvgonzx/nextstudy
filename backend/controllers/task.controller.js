@@ -19,9 +19,9 @@ export const create = async (req, res) => {
 	}
 
 	try {
-		const { task, classroom_id, completed } = req.body;
+		const { task, classroom_id } = req.body;
 
-		const taskModel = await Task.create({ task, classroom_id, completed });
+		const taskModel = await Task.create({ task, classroom_id });
 
 		return res.status(200).json(taskModel);
 	} catch (error) {
@@ -37,7 +37,7 @@ export const update = async (req, res) => {
     }
 
 	try {
-		const { task, classroom_id, completed } = req.body;
+		const { completed } = req.body;
 
 		const taskModel = await Task.findByPk(req.params.id);
 
@@ -45,7 +45,7 @@ export const update = async (req, res) => {
 			return res.status(404).send('Task not found');
 		}
 
-		await taskModel.update({ task, classroom_id, completed });
+		await taskModel.update({ completed });
 		return res.status(200).json(taskModel);
 	} catch (error) {
 		console.error(error);

@@ -8,7 +8,7 @@ router.get('/', taskController.getAll);
 
 router.post('/', validator.task, taskController.create);
 
-router.put('/:id', validator.task, taskController.update);
+router.put('/:id', validator.taskUpdate, taskController.update);
 
 router.delete('/:id', taskController.remove);
 
