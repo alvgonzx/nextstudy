@@ -130,7 +130,7 @@ const ExamsForm = () => {
 		setName(exam.name);
 		setDate(exam.date);
 		setClassroomId(exam.classroom_id);
-		mark !== null ? setMark(exam.mark) : '';
+		setMark(exam.mark);
 	};
 
 	const handleEditSubmit = async (event) => {
