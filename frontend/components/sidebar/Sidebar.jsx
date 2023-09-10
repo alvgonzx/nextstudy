@@ -28,11 +28,6 @@ const links = [
         route: "/classrooms",
     },
     {
-        label: "Timer",
-        svg: "timer",
-        route: "/timer",
-    },
-    {
         label: "AI Homework",
         svg: "ai-homework",
         route: "/ai-homework",
