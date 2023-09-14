@@ -42,10 +42,10 @@ const getClassrooms = async () => {
 
 const HomePage = async () => {
 	const tasks = await getTasks();
-	const incompletedTasks = tasks.filter((task) => !task.completed);
+	const incompletedTasks = Object.values(tasks).filter((task) => !task.completed);
 
 	const exams = await getExams();
-	const remainingExams = exams.filter((exam) => exam.mark === undefined || exam.mark === null);
+	const remainingExams = Object.values(exams).filter((exam) => exam.mark === undefined || exam.mark === null);
 
 	const classrooms = await getClassrooms();
 
