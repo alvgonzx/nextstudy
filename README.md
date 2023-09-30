@@ -14,8 +14,7 @@ Open-source studying platform built using ExpressJS, SQLite, NextJS and Tailwind
 
 ## Check it out
 
-> [!WARNING]  
-> Demo is still in development, you have to install it locally
+Demo is live at [https://nextstudy.alvgonzx.site/](nextstudy.alvgonzx.site)
 
 ## Technologies
 
